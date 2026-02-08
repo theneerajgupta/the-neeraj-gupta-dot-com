@@ -6,17 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 require("./config");
 const PORT = process.env.PORT || 8000;
+const PUBLIC_URL = process.env.PUBLIC_URL?.replace(/\/$/, "") || "http://localhost";
 app_1.default.get("/", (_req, res) => {
     res.status(200).json({
-        message: 'server is active',
-        port: PORT
+        message: "server is active",
+        port: PORT,
     });
 });
 app_1.default.listen(PORT, () => {
     if (process.env.NODE_ENV !== "production") {
-        console.log(`[server] http://localhost:${PORT}`);
+        console.log(`[server] ${PUBLIC_URL}:${PORT}`);
+        return;
     }
-    else {
-        console.log(`[server] running (production)`);
-    }
+    console.log(`[server] ${PUBLIC_URL} (internal port ${PORT})`);
 });
